@@ -415,9 +415,8 @@ function logic() {
 		return;
 	}
 
-	if (window.X1Map) {
+	if (window.X1Map)
 		return;
-	}
 
 	if(window.settings.settings.ggbot && Object.keys(api.ships).length <= api._blackListedNpcs.length){
 		api._blackListedNpcs = [];
@@ -640,17 +639,15 @@ function logic() {
 		} else if (window.settings.settings.ggbot || (api.lockedShip && api.lockedShip.id == api.targetShip.id)) {
 			if (window.settings.settings.circleNpc) {
 				let enemy = api.targetShip.position;
-				let cx = enemy.x;
-				let cy = enemy.y;
-				if(api.lockedShip && api.lockedShip.percentOfHp < 25 || dist > 700){
-					cx = api.targetShip.target.x;
-					cy = api.targetShip.target.y;
+				let range = api.targetShip.range;
+				if(!api.lockedShip.heroAttacked){
+					range *= 0.50
 				}
-				let f = Math.atan2(window.hero.position.x - cx, window.hero.position.y - cy) + 0.5;
+				let f = Math.atan2(window.hero.position.x - enemy.x, window.hero.position.y - enemy.y) + 0.5;
 				let s = Math.PI / 180;
 				f += s;
-				x = cx + api.targetShip.range * Math.sin(f);
-				y = cy + api.targetShip.range * Math.cos(f);
+				x = enemy.x + range * Math.sin(f);
+				y = enemy.y + range * Math.cos(f);
 				let nearestBox = api.findNearestBox();
 				if (nearestBox && nearestBox.box && nearestBox.distance < 300) {
 					circleBox = nearestBox;

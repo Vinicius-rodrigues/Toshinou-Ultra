@@ -317,35 +317,6 @@ class Api {
 	}
 
 
-	countNpcAroundByType(type, distance){
-		let shipsCount = Object.keys(this.ships).length;
-		let shipsAround = 0;
-		for (let property in this.ships) {
-			let ship = this.ships[property];
-			if (ship && (ship.distanceTo(window.hero.position) < distance) && (ship.name == type)) {
-				shipsAround++;
-			}
-		}
-		return shipsAround;
-	}
-
-	allNPCInCorner(){
-		let shipsCount = Object.keys(this.ships).length;
-		let shipsInCorner = 0;
-		for (let property in this.ships) {
-			let ship = this.ships[property];
-			if((ship.position.x == 20999 && ship.position.y == 13499) || (ship.position.x == 0 && ship.position.y == 0)) {
-				shipsInCorner++;
-			}
-		}
-		
-		if(shipsInCorner == shipsCount){
-			return true;
-		}else{
-			return false;
-		}
-	}
-
 	findNearestBox() {
 		let minDist = 100000;
 		let finalBox;
@@ -490,7 +461,7 @@ class Api {
 			let gate = this.gates[g];
 			// Avoid pvp gates if Jump and Return is enabled
 			// 1-5->4-4 | 3-5->4-4 | 2-5->4-4 | 1-4->4-1 | 2-4->4-2 | 3-4->4-3 | x-8->x-BL respectively
-			let pvpgates = [150000299, 150000319,150000330, 150000191, 150000192, 150000193, 150000209, 150000205, 150000201];
+			let pvpgates = [];
 			if(gate.gateType == 1 && !(window.settings.settings.jumpFromEnemy && pvpgates.indexOf(gate.gateId) != -1)){
 				let enemeyDistance = enemy.distanceTo(gate.position);
 				let dist = window.hero.distanceTo(gate.position);
