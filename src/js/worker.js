@@ -641,7 +641,7 @@ function logic() {
 				let enemy = api.targetShip.position;
 				let range = api.targetShip.range;
 				if(!api.lockedShip.heroAttacked){
-					range *= 0.50
+					range -= range * 0.50
 				}
 				let f = Math.atan2(window.hero.position.x - enemy.x, window.hero.position.y - enemy.y) + 0.5;
 				let s = Math.PI / 180;
